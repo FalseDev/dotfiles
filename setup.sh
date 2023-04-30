@@ -1,4 +1,5 @@
 #!/usr/bin/env bash
+set -euxo pipefail
 
 # Variables
 # MOLD_VERSION="1.11.0"
@@ -24,9 +25,12 @@ fish -c exit
 sudo apt-get update -y
 sudo apt-get install -y wget tar
 
+# Create local bin folder and fish completions folder
+mkdir -p ~/.local/bin/ ~/.config/fish/completions/
+
 
 # Install neovim
-wget -O ~/.local/bin/nvim https://github.com/neovim/neovim/releases/download/stable/nvim.appimage
+wget -qO ~/.local/bin/nvim https://github.com/neovim/neovim/releases/download/stable/nvim.appimage
 
 # Starship
 curl -sS https://starship.rs/install.sh | sh -s -- -y
@@ -36,7 +40,7 @@ curl --proto '=https' --tlsv1.2 -sSf https://sh.rustup.rs | sh -s -- -y
 # Update fish path
 fish -c 'fish_add_path ~/.cargo/bin/'
 # Update bash path for this script
-source "$HOME/.bashrc"
+source $HOME/.cargo/env
 
 
 # Install mold
@@ -47,18 +51,18 @@ source "$HOME/.bashrc"
 # mv mold ~/.local/bin/
 
 # Install helix
-wget -O helix "https://github.com/helix-editor/helix/releases/download/$HELIX_VERSION/helix-$HELIX_VERSION-$(arch).AppImage"
+wget -qO helix "https://github.com/helix-editor/helix/releases/download/$HELIX_VERSION/helix-$HELIX_VERSION-$(arch).AppImage"
 chmod +x helix
 mv helix ~/.local/bin/
 
 # Install cargo-binstall
-wget -O cargo-binstall.tgz "https://github.com/cargo-bins/cargo-binstall/releases/latest/download/cargo-binstall-$(arch)-unknown-linux-musl.tgz"
+wget -qO cargo-binstall.tgz "https://github.com/cargo-bins/cargo-binstall/releases/latest/download/cargo-binstall-$(arch)-unknown-linux-musl.tgz"
 tar xf cargo-binstall.tgz
 rm cargo-binstall.tgz
 mv cargo-binstall ~/.cargo/bin/
 
 # Install fzf
-wget -O fzf.tar.gz "https://github.com/junegunn/fzf/releases/download/$FZF_VERSION/fzf-$FZF_VERSION-linux_$(dpkg --print-architecture).tar.gz"
+wget -qO fzf.tar.gz "https://github.com/junegunn/fzf/releases/download/$FZF_VERSION/fzf-$FZF_VERSION-linux_$(dpkg --print-architecture).tar.gz"
 tar xf fzf.tar.gz
 rm fzf.tar.gz
 mv fzf ~/.local/bin/
@@ -74,7 +78,7 @@ echo "starship init fish | source" >> ~/.config/fish/config.fish
 
 
 # Completions
-wget -O- https://github.com/sharkdp/bat/raw/master/assets/completions/bat.fish.in | sed 's/{{PROJECT_EXECUTABLE}}/bat/' > ~/.config/fish/completions/bat.fish
+wget -qO- https://github.com/sharkdp/bat/raw/master/assets/completions/bat.fish.in | sed 's/{{PROJECT_EXECUTABLE}}/bat/' > ~/.config/fish/completions/bat.fish
 et --completions fish > ~/.config/fish/completions/et.fish
 fnm completions > ~/.config/fish/completions/fnm.fish
 just --completions fish > ~/.config/fish/completions/just.fish
