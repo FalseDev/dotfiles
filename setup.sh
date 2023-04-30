@@ -1,4 +1,4 @@
-#!/usr/bin/bash
+#!/usr/bin/env bash
 
 # Variables
 # MOLD_VERSION="1.11.0"
