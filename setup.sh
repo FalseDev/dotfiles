@@ -79,7 +79,7 @@ echo "starship init fish | source" >> ~/.config/fish/config.fish
 
 # Completions
 wget -qO- https://github.com/sharkdp/bat/raw/master/assets/completions/bat.fish.in | sed 's/{{PROJECT_EXECUTABLE}}/bat/' > ~/.config/fish/completions/bat.fish
-et --completions fish > ~/.config/fish/completions/et.fish
+erd --completions fish > ~/.config/fish/completions/erd.fish
 fnm completions > ~/.config/fish/completions/fnm.fish
 just --completions fish > ~/.config/fish/completions/just.fish
 starship completions fish > ~/.config/fish/completions/starship.fish
